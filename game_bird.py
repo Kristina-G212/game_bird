@@ -20,13 +20,13 @@ flyDown = [pygame.image.load('bird_down_fly_1.png'), pygame.image.load('bird_dow
 birdStand = pygame.image.load('bird_front_1.png')
 
 walkBack = [pygame.image.load('bird_back_1.png'), pygame.image.load('bird_back_2.png'),
-            pygame.image.load('bird_back_3.png')]
+            pygame.image.load('bird_back_3.png'), pygame.image.load('bird_back_1.png')]
 
 walkLeft = [pygame.image.load('bird_left_1.png'), pygame.image.load('bird_left_2.png'),
-            pygame.image.load('bird_left_3.png')]
+            pygame.image.load('bird_left_3.png'), pygame.image.load('bird_left_1.png')]
 
 walkRight = [pygame.image.load('bird_right_1.png'), pygame.image.load('bird_right_2.png'),
-             pygame.image.load('bird_right_3.png')]
+             pygame.image.load('bird_right_3.png'), pygame.image.load('bird_right_1.png')]
 
 bg = pygame.image.load('forest(500x500).jpg')
 
@@ -45,6 +45,12 @@ left = False
 right = False
 up = False
 down = False
+flyup = False
+flyleft = False
+flyright = False
+flydown = False
+
+
 animCount = 0
 
 
@@ -52,17 +58,29 @@ def drawWindow():
     global animCount
     win.blit(bg, (0, 0))
 
-    if animCount + 1 >= 30:  # 30 fps
+    if animCount + 1 >= 15:  # 15 fps
         animCount = 0
 
     if left:
-        win.blit(walkLeft[animCount // 30], (x, y))
+        win.blit(walkLeft[animCount // 5], (x, y))
         animCount += 1
     elif right:
-        win.blit(walkRight[animCount // 30], (x, y))
+        win.blit(walkRight[animCount // 5], (x, y))
         animCount += 1
     elif up:
-        win.blit(walkBack[animCount // 30], (x, y))
+        win.blit(walkBack[animCount // 5], (x, y))
+        animCount += 1
+    elif flyright:
+        win.blit(flyRight[animCount // 5], (x, y))
+        animCount += 1
+    elif flyup:
+        win.blit(flyUp[animCount // 5], (x, y))
+        animCount += 1
+    elif flydown:
+        win.blit(flyDown[animCount // 5], (x, y))
+        animCount += 1
+    elif flyleft:
+        win.blit(flyLeft[animCount // 5], (x, y))
         animCount += 1
     else:
         win.blit(birdStand, (x, y))
@@ -85,24 +103,80 @@ while run:
         right = False
         up = False
         down = False
+        flyup = False
+        flyleft = False
+        flyright = False
+        flydown = False
     elif keys[pygame.K_RIGHT] and x < 500 - wight - 5:
         x += speed
         left = False
         right = True
         up = False
         down = False
+        flyup = False
+        flyleft = False
+        flyright = False
+        flydown = False
     elif keys[pygame.K_UP] and y > 370:
         y -= speed
         left = False
         right = False
         up = True
         down = False
+        flyup = False
+        flyleft = False
+        flyright = False
+        flydown = False
     elif keys[pygame.K_DOWN] and y < 500 - height - 5:
         y += speed
         left = False
         right = False
         up = False
         down = True
+        flyup = False
+        flyleft = False
+        flyright = False
+        flydown = False
+    elif keys[pygame.K_d] and x < 500 - wight - 5:
+        x += speed
+        left = False
+        right = False
+        up = False
+        down = False
+        flyup = False
+        flyleft = False
+        flyright = True
+        flydown = False
+    elif keys[pygame.K_w] and y > 5:
+        y -= speed
+        left = False
+        right = False
+        up = False
+        down = False
+        flyup = True
+        flyleft = False
+        flyright = False
+        flydown = False
+    elif keys[pygame.K_s] and y < 500 - height - 5:
+        y += speed
+        left = False
+        right = False
+        up = False
+        down = False
+        flyup = False
+        flyleft = False
+        flyright = False
+        flydown = True
+    elif keys[pygame.K_a] and x > 5:
+        x -= speed
+        left = False
+        right = False
+        up = False
+        down = False
+        flyup = False
+        flyleft = True
+        flyright = False
+        flydown = False
     else:
         animCount = 0
 
